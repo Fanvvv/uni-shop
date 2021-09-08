@@ -1,0 +1,22 @@
+{
+  "name": "uni-shop",
+  "version": "1.0.0",
+  "description": "uniapp 电商小程序",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeEgret/uni-shop.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codeEgret/uni-shop/issues"
+  },
+  "homepage": "https://github.com/codeEgret/uni-shop#readme",
+  "dependencies": {
+    "@escook/request-miniprogram": "^0.2.1"
+  }
+}

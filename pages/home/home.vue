@@ -10,7 +10,7 @@
     </swiper>
     <!-- 分类导航 -->
     <view class="nav-list">
-      <view class="nav-list-item" v-for="(item, i) in navList" :key="i">
+      <view class="nav-list-item" v-for="(item, i) in navList" :key="i" @click="handleNavClick(item)">
         <image :src="item.image_src" class="nav-img"></image>
       </view>
     </div>
@@ -41,6 +41,13 @@
         // console.log(data)
         if (data.meta.status !== 200) return uni.$showMsg()
         this.navList = data.message
+      },
+      handleNavClick(item) {
+        if (item.name === '分类') {
+          uni.switchTab({
+            url: '/pages/cate/cate'
+          })
+        }
       }
     }
 	}

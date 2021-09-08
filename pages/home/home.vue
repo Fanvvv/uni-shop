@@ -15,6 +15,27 @@
       </view>
     </div>
 	</view>
+  <!-- 楼层图片 -->
+  <view class="floor-list">
+    <!-- 楼层 item 项 -->
+    <view class="floor-item" v-for="(item,i) in floorList" :key="i">
+      <!-- 标题 -->
+      <image :src="item.floor_title.image_src" class="floor-title"></image>
+      <!-- 楼层图片区域 -->
+      <view class="floor-img-box">
+        <!-- 左边图片 -->
+        <view class="img-box-left">
+          <image :src="item.product_list[0].image_src" :style="{ width: item.product_list[0].image_width + 'rpx' }" mode="widthFix"></image>
+        </view>
+        <!-- 右边图片 -->
+        <view class="img-box-right">
+          <view class="right-item" v-for="(productItem, index) in item.product_list" :key="index" v-if="index !== 0">
+            <image :src="productItem.image_src" :style="{width: productItem.image_width + 'rpx'}" mode="widthFix"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
 </template>
 
 <script>
@@ -22,12 +43,14 @@
 		data() {
 			return {
 				swiperList: [],
-        navList: []
+        navList: [],
+        floorList: []
 			};
 		},
     onLoad() {
       this.getSwiperList()
       this.getNavList()
+      this.getFloorList()
     },
     methods: {
       async getSwiperList() {
@@ -41,6 +64,12 @@
         // console.log(data)
         if (data.meta.status !== 200) return uni.$showMsg()
         this.navList = data.message
+      },
+      async getFloorList() {
+        const { data } = await uni.$http.get('/api/public/v1/home/floordata')
+        // console.log(data)
+        if (data.meta.status !== 200) return uni.$showMsg()
+        this.floorList = data.message
       },
       handleNavClick(item) {
         if (item.name === '分类') {
@@ -69,5 +98,20 @@ swiper {
     width: 128rpx;
     height: 140rpx;
   }
+}
+.floor-title {
+  display: flex;
+  width: 100%;
+  height: 60rpx;
+}
+.img-box-right {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.floor-img-box {
+  display: flex;
+  margin-top: 10rpx;
+  padding-left: 10rpx;
 }
 </style>

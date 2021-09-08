@@ -12,6 +12,19 @@
     "path": "pages/my/my",
     "style": {}
   }],
+  "subPackages": [{
+    "root": "subpkg",
+    "pages": [{
+                    "path" : "goods-detail/goods-detail",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
+  }],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "毛塘铺商城",

@@ -51,7 +51,8 @@
         /* 小程序特有相关 */
         "appid" : "wx64322fed1231502a",
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : false,
+            "checkSiteMap" : false
         },
         "usingComponents" : true
     }

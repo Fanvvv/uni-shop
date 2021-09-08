@@ -24,14 +24,14 @@
       <!-- 楼层图片区域 -->
       <view class="floor-img-box">
         <!-- 左边图片 -->
-        <view class="img-box-left">
+        <navigator class="img-box-left" :url="item.product_list[0].url">
           <image :src="item.product_list[0].image_src" :style="{ width: item.product_list[0].image_width + 'rpx' }" mode="widthFix"></image>
-        </view>
+        </navigator>
         <!-- 右边图片 -->
         <view class="img-box-right">
-          <view class="right-item" v-for="(productItem, index) in item.product_list" :key="index" v-if="index !== 0">
+          <navigator class="right-item" v-for="(productItem, index) in item.product_list" :key="index" v-if="index !== 0" :url="productItem.url">
             <image :src="productItem.image_src" :style="{width: productItem.image_width + 'rpx'}" mode="widthFix"></image>
-          </view>
+          </navigator>
         </view>
       </view>
     </view>
@@ -69,6 +69,12 @@
         const { data } = await uni.$http.get('/api/public/v1/home/floordata')
         // console.log(data)
         if (data.meta.status !== 200) return uni.$showMsg()
+        // 处理跳转的传参
+        data.message.forEach(floor => {
+          floor.product_list.forEach(product => {
+            product.url = '/subpkg/goods-list/goods-list?' + product.navigator_url.split('?')[1]
+          })
+        })
         this.floorList = data.message
       },
       handleNavClick(item) {

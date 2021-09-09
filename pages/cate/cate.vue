@@ -2,12 +2,14 @@
 	<view>
 		<view class="scroll-view-container">
 		  <scroll-view class="scroll-view-left" scroll-y="true" :style="{height: wh + 'px'}">
-        <view class="scroll-left-item active">xxxxx</view>
-        <view class="scroll-left-item">xxxxx</view>
-        <view class="scroll-left-item">xxxxx</view>
-        <view class="scroll-left-item">xxxxx</view>
-        <view class="scroll-left-item">xxxxx</view>
-        <view class="scroll-left-item">xxxxx</view>
+        <view
+         v-for="(item, index) in cateList"
+         :key="item.cat_id"
+         :class="['scroll-left-item', index === activeIndex ? 'active' : '']"
+         @click="changeActive(index)"
+         >
+          {{ item.cat_name }}
+         </view>
       </scroll-view>
       <scroll-view class="scroll-view-right" scroll-y="true" :style="{height: wh + 'px'}">
         <view class="scroll-right-item">yyyyy</view>
@@ -26,7 +28,11 @@
 		data() {
 			return {
         // 窗口的可用高度 = 屏幕高度 - navigationBar高度 - tabBar 高度
-				wh: 0
+				wh: 0,
+        cateList: [],
+        // 默认选择第一项
+        activeIndex: 0
+        
 			};
 		},
     onLoad() {
@@ -34,6 +40,20 @@
       const sysInfo = uni.getSystemInfoSync()
       // 为 wh 窗口可用高度动态赋值
       this.wh = sysInfo.windowHeight
+      // 发送请求获取数据
+      this.getCateList()
+    },
+    methods: {
+      async getCateList() {
+        const { data } = await uni.$http.get('/api/public/v1/categories')
+        console.log(data)
+        if (data.meta.status !== 200) return uni.$showMsg()
+        this.cateList = data.message
+      },
+      // 选中项触发事件
+      changeActive(index) {
+        this.activeIndex = index
+      }
     }
 	}
 </script>

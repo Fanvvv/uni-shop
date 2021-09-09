@@ -12,12 +12,11 @@
          </view>
       </scroll-view>
       <scroll-view class="scroll-view-right" scroll-y="true" :style="{height: wh + 'px'}">
-        <view class="scroll-right-item">yyyyy</view>
-        <view class="scroll-right-item">yyyyy</view>
-        <view class="scroll-right-item">yyyyy</view>
-        <view class="scroll-right-item">yyyyy</view>
-        <view class="scroll-right-item">yyyyy</view>
-        <view class="scroll-right-item">yyyyy</view>
+        <view v-for="(subItem, index) in subCateList" :key="subItem.cat_id" class="cate-lv2">
+          <view class="cate-lv2-title">
+            {{ subItem.cat_name }}
+          </view>
+        </view>
       </scroll-view>
 		</view>
 	</view>
@@ -31,8 +30,9 @@
 				wh: 0,
         cateList: [],
         // 默认选择第一项
-        activeIndex: 0
-        
+        activeIndex: 0,
+        // 二级分类列表
+        subCateList: []
 			};
 		},
     onLoad() {
@@ -49,10 +49,14 @@
         console.log(data)
         if (data.meta.status !== 200) return uni.$showMsg()
         this.cateList = data.message
+        // 赋值二级分类列表
+        this.subCateList = data.message[0].children
       },
       // 选中项触发事件
       changeActive(index) {
         this.activeIndex = index
+        // 修改二级分类列表的数据
+        this.subCateList = this.cateList[index].children
       }
     }
 	}
@@ -85,5 +89,11 @@
       }
     }
   }
+}
+.cate-lv2-title {
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  padding: 15px 0;
 }
 </style>

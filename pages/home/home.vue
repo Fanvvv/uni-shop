@@ -13,29 +13,29 @@
       <view class="nav-list-item" v-for="(item, i) in navList" :key="i" @click="handleNavClick(item)">
         <image :src="item.image_src" class="nav-img"></image>
       </view>
-    </div>
-	</view>
-  <!-- 楼层图片 -->
-  <view class="floor-list">
-    <!-- 楼层 item 项 -->
-    <view class="floor-item" v-for="(item,i) in floorList" :key="i">
-      <!-- 标题 -->
-      <image :src="item.floor_title.image_src" class="floor-title"></image>
-      <!-- 楼层图片区域 -->
-      <view class="floor-img-box">
-        <!-- 左边图片 -->
-        <navigator class="img-box-left" :url="item.product_list[0].url">
-          <image :src="item.product_list[0].image_src" :style="{ width: item.product_list[0].image_width + 'rpx' }" mode="widthFix"></image>
-        </navigator>
-        <!-- 右边图片 -->
-        <view class="img-box-right">
-          <navigator class="right-item" v-for="(productItem, index) in item.product_list" :key="index" v-if="index !== 0" :url="productItem.url">
-            <image :src="productItem.image_src" :style="{width: productItem.image_width + 'rpx'}" mode="widthFix"></image>
+    </view>
+    <!-- 楼层图片 -->
+    <view class="floor-list">
+      <!-- 楼层 item 项 -->
+      <view class="floor-item" v-for="(item,i) in floorList" :key="i">
+        <!-- 标题 -->
+        <image :src="item.floor_title.image_src" class="floor-title"></image>
+        <!-- 楼层图片区域 -->
+        <view class="floor-img-box">
+          <!-- 左边图片 -->
+          <navigator class="img-box-left" :url="item.product_list[0].url">
+            <image :src="item.product_list[0].image_src" :style="{ width: item.product_list[0].image_width + 'rpx' }" mode="widthFix"></image>
           </navigator>
+          <!-- 右边图片 -->
+          <view class="img-box-right">
+            <navigator class="right-item" v-for="(productItem, index) in item.product_list" :key="index" v-if="index !== 0" :url="productItem.url">
+              <image :src="productItem.image_src" :style="{width: productItem.image_width + 'rpx'}" mode="widthFix"></image>
+            </navigator>
+          </view>
         </view>
       </view>
     </view>
-  </view>
+	</view>
 </template>
 
 <script>

@@ -43,7 +43,7 @@
         activeIndex: 0,
         // 二级分类列表
         subCateList: [],
-        // 滚动条距离顶部的距离
+        // 滚动条距离页面顶部的位置
         scrollTop: 0
 			};
 		},

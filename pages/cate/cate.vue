@@ -18,7 +18,7 @@
           </view>
           <!-- 三级列表 -->
           <view class="cate-lv3-list">
-            <view class="cate-lv3-item" v-for="item in subItem.children" :key="item.cat_id">
+            <view class="cate-lv3-item" v-for="item in subItem.children" :key="item.cat_id" @click="toGoodsList(item.cat_id)">
               <!-- 图片 -->
               <!-- 后台接口问题，需要把9090端口替换为6005端口 -->
               <image :src="item.cat_icon.replace(/9090/, 6005)" mode="widthFix"></image>
@@ -71,6 +71,12 @@
         this.subCateList = this.cateList[index].children
         // 让 scrollTop 的值在 0 与 1 之间切换
         this.scrollTop = this.scrollTop === 0 ? 1 : 0
+      },
+      // 跳转到商品列表页
+      toGoodsList(cid) {
+        uni.navigateTo({
+          url: '/subpkg/goods-list/goods-list?cid=' + cid
+        })
       }
     }
 	}

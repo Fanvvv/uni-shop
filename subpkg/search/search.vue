@@ -11,12 +11,21 @@
   export default {
     data() {
       return {
-        
+        // 定时器
+        timer: null,
+        // 搜索的关键词
+        keyword: ''
       };
     },
     methods: {
       input(e) {
-        console.log(e)
+        // 清除定时器
+        clearTimeout(this.timer)
+        // 创建一个新的延时器，500ms没有更改时触发
+        this.timer = setTimeout(() => {
+          this.keyword = e
+          console.log(this.keyword)
+        }, 500)
       }
     }
   }

@@ -14,7 +14,9 @@
         // 定时器
         timer: null,
         // 搜索的关键词
-        keyword: ''
+        keyword: '',
+        // 搜索结果列表
+        searchResultList: []
       };
     },
     methods: {
@@ -24,8 +26,21 @@
         // 创建一个新的延时器，500ms没有更改时触发
         this.timer = setTimeout(() => {
           this.keyword = e
-          console.log(this.keyword)
+          // console.log(this.keyword)
+          // 获取搜索结果
+          this.getSearchList()
         }, 500)
+      },
+      // 获取搜索结果
+      async getSearchList() {
+        if (!this.keyword) {
+          this.searchResultList = []
+          return
+        }
+        const { data } = await uni.$http.get('/api/public/v1/goods/search', { query: this.keyword })
+        // console.log(data)
+        if (data.meta.status !== 200) return uni.$showMsg()
+        this.searchResultList = data.message
       }
     }
   }

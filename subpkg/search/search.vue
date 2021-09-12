@@ -22,7 +22,7 @@
       </view>
       <!-- 列表区域 -->
       <view class="history-list">
-        <uni-tag :text="item" v-for="(item, i) in historys" :key="i"></uni-tag>
+        <uni-tag :text="item" v-for="(item, i) in historys" :key="i" @click="toGoodsList(item)"></uni-tag>
       </view>
     </view>
   </view>
@@ -98,6 +98,12 @@
         this.historyList = []
         // 清除本地存储的数据
         uni.setStorageSync('keyword', [])
+      },
+      // 根据关键字跳转到商品列表页
+      toGoodsList(keyword) {
+        uni.navigateTo({
+          url: '/subpkg/goods-list/goods-list?query=' + keyword
+        })
       }
     },
     computed: {

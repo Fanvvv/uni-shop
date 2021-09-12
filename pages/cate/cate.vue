@@ -1,5 +1,6 @@
 <template>
 	<view>
+    <my-search></my-search>
 		<view class="scroll-view-container">
 		  <scroll-view class="scroll-view-left" scroll-y="true" :style="{height: wh + 'px'}">
         <view
@@ -33,7 +34,11 @@
 </template>
 
 <script>
+  import mySearch from '../../components/my-search/my-search.vue'
 	export default {
+    components: {
+      mySearch
+    },
 		data() {
 			return {
         // 窗口的可用高度 = 屏幕高度 - navigationBar高度 - tabBar 高度
@@ -51,7 +56,8 @@
       // 获取当前系统信息
       const sysInfo = uni.getSystemInfoSync()
       // 为 wh 窗口可用高度动态赋值
-      this.wh = sysInfo.windowHeight
+      // 可用高度 = 屏幕高度 - navigationBar高度 - tabBar高度 - 自定义的search组件高度(50)
+      this.wh = sysInfo.windowHeight - 50
       // 发送请求获取数据
       this.getCateList()
     },

@@ -1,6 +1,6 @@
 <template>
 	<view>
-    <my-search></my-search>
+    <my-search @click='toSearch'></my-search>
 		<view class="scroll-view-container">
 		  <scroll-view class="scroll-view-left" scroll-y="true" :style="{height: wh + 'px'}">
         <view
@@ -82,6 +82,12 @@
       toGoodsList(cid) {
         uni.navigateTo({
           url: '/subpkg/goods-list/goods-list?cid=' + cid
+        })
+      },
+      // 跳转到搜索页
+      toSearch() {
+        uni.navigateTo({
+          url: '/subpkg/search/search'
         })
       }
     }

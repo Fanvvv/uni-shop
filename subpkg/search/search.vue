@@ -5,12 +5,24 @@
       <uni-search-bar @input="input" :radius="100" cancelButton="none"></uni-search-bar>
     </view>
     <!-- 搜索建议列表页 -->
-    <view class="sugg-list">
+    <view class="sugg-list" v-if="searchResultList.length !== 0">
       <view class="sugg-item" v-for="(item, i) in searchResultList.goods" :key="i" @click="toDetail(item.goods_id)">
         <view class="goods-name">
           {{ item.goods_name }}
         </view>
         <uni-icons type="arrowright" size="16"></uni-icons>
+      </view>
+    </view>
+    <!-- 搜索历史 -->
+    <view class="history-box" v-else>
+      <!-- 标题区域 -->
+      <view class="history-title">
+        <text>搜索历史</text>
+        <uni-icons type="trash" size="17"></uni-icons>
+      </view>
+      <!-- 列表区域 -->
+      <view class="history-list">
+        <uni-tag :text="item" v-for="(item, i) in historyList" :key="i"></uni-tag>
       </view>
     </view>
   </view>
@@ -25,7 +37,9 @@
         // 搜索的关键词
         keyword: '',
         // 搜索结果列表
-        searchResultList: []
+        searchResultList: [],
+        // 搜索历史列表
+        historyList: []
       };
     },
     methods: {
@@ -84,6 +98,25 @@
       // 文本溢出后，使用 ... 代替
       text-overflow: ellipsis;
       margin-right: 3px;
+    }
+  }
+}
+.history-box {
+  padding: 0 5px;
+  .history-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    font-size: 13px;
+    border-bottom: 1px solid #efefef;
+  }
+  .history-list {
+    display: flex;
+    flex-wrap: wrap;
+    .uni-tag {
+      margin-top: 5px;
+      margin-right: 5px;
     }
   }
 }

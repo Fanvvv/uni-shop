@@ -42,6 +42,10 @@
         historyList: []
       };
     },
+    onLoad() {
+      // 加载本地存储的搜索历史记录
+      this.historyList = JSON.parse(uni.getStorageSync('keyword') || [])
+    },
     methods: {
       input(e) {
         // 清除定时器
@@ -85,6 +89,8 @@
         set.add(this.keyword)
         // 将 Set 对象转化为数组
         this.historyList = Array.from(set)
+        // 将搜索历史记录持久化存储到本地
+        uni.setStorageSync('keyword', JSON.stringify(this.historyList))
       }
     },
     computed: {

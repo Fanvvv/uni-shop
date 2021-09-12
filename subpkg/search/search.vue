@@ -22,7 +22,7 @@
       </view>
       <!-- 列表区域 -->
       <view class="history-list">
-        <uni-tag :text="item" v-for="(item, i) in historyList" :key="i"></uni-tag>
+        <uni-tag :text="item" v-for="(item, i) in historys" :key="i"></uni-tag>
       </view>
     </view>
   </view>
@@ -64,12 +64,33 @@
         // console.log(data)
         if (data.meta.status !== 200) return uni.$showMsg()
         this.searchResultList = data.message
+        // 查询到搜索后，将搜索关键字保存到搜索历史
+        this.saveSearchHistory()
       },
       // 根据商品id跳转到商品详情页
       toDetail(id) {
         uni.navigateTo({
           url: '/subpkg/goods-detail/goods-detail?goods_id=' + id
         })
+      },
+      // 保存搜索关键词的方法
+      saveSearchHistory() {
+        // this.historyList.push(this.keyword)
+        // 使用 Set 对象对数组进行去重
+        // 将数组转化为 Set 对象
+        const set = new Set(this.historyList)
+        // 删除关键字
+        set.delete(this.keyword)
+        // 添加关键字
+        set.add(this.keyword)
+        // 将 Set 对象转化为数组
+        this.historyList = Array.from(set)
+      }
+    },
+    computed: {
+      historys() {
+        // 当列表改变时，反转数组，确保搜索历史记录的顺序
+        return [...this.historyList].reverse()
       }
     }
   }

@@ -1,6 +1,6 @@
 <template>
 	<view>
-    <my-search @click='toSearch'></my-search>
+    <my-search @click="toSearch"></my-search>
 		<view class="scroll-view-container">
 		  <scroll-view class="scroll-view-left" scroll-y="true" :style="{height: wh + 'px'}">
         <view

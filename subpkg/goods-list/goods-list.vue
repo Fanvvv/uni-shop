@@ -49,15 +49,27 @@
       // 重新获取数据
       this.getGoodsList()
     },
+    // 下拉刷新事件
+    onPullDownRefresh() {
+      // 重置关键数据
+      this.queryObj.pagenum = 1
+      this.total = 0
+      this.isloading = false
+      this.goodsList = []
+      // 重新发送请求，并关闭刷新事件
+      this.getGoodsList(() => uni.stopPullDownRefresh())
+    },
     methods: {
       // 获取商品列表数据的方法
-      async getGoodsList() {
+      async getGoodsList(cb) {
         // 正在请求数据
         this.isLoading = true
         const { data } = await uni.$http.get('/api/public/v1/goods/search', this.queryObj)
         console.log(data)
         // 数据请求完毕
         this.isLoading = false
+        // 有关闭刷新事件则执行
+        cb && cb()
         if (data.meta.status !== 200) return uni.$showMsg()
         // 新旧数据拼接
         this.goodsList = [...this.goodsList, ...data.message.goods]

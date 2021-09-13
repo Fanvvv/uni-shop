@@ -26,7 +26,9 @@
         // 商品列表的数据
         goodsList: [],
         // 总数量，用来实现分页
-        total: 0
+        total: 0,
+        // 节流阀
+        isLoading: false
       };
     },
     onLoad(options) {
@@ -38,6 +40,8 @@
     },
     // 触底的事件
     onReachBottom() {
+      // 正在发送请求，则不再重复发送请求
+      if (this.isLoading) return
       // 页面自增
       this.queryObj.pagenum += 1
       // 重新获取数据
@@ -46,8 +50,12 @@
     methods: {
       // 获取商品列表数据的方法
       async getGoodsList() {
+        // 正在请求数据
+        this.isLoading = true
         const { data } = await uni.$http.get('/api/public/v1/goods/search', this.queryObj)
         console.log(data)
+        // 数据请求完毕
+        this.isLoading = false
         if (data.meta.status !== 200) return uni.$showMsg()
         // 新旧数据拼接
         this.goodsList = [...this.goodsList, ...data.message.goods]

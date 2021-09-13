@@ -1,9 +1,9 @@
 <template>
   <view>
     <view class="goods-list">
-      <block v-for="goods in goodsList" :key="goods.goods_id">
+      <view v-for="goods in goodsList" :key="goods.goods_id" @click="toGoodsDetail(goods.goods_id)">
         <my-goods :goods="goods"></my-goods>
-      </block>
+      </view>
     </view>
   </view>
 </template>
@@ -74,6 +74,12 @@
         // 新旧数据拼接
         this.goodsList = [...this.goodsList, ...data.message.goods]
         this.total = data.message.total
+      },
+      // 跳转到商品详情页
+      toGoodsDetail(id) {
+        uni.navigateTo({
+          url: '/subpkg/goods-detail/goods-detail?goods_id=' + id
+        })
       }
     }
   }

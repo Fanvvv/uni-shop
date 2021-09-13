@@ -10,7 +10,7 @@
         </view>
         <view class="goods-info">
           <view class="goods-price">
-            &yen;{{ goods.goods_price }}
+            &yen;{{ goods.goods_price | toFixed }}
           </view>
         </view>
       </view>
@@ -31,6 +31,12 @@
       goods: {
         type: Object,
         default: () => ({})
+      }
+    },
+    filters: {
+      toFixed(num) {
+        // 把数字处理为带两位小数点的数字
+        return Number(num).toFixed(2)
       }
     }
   }

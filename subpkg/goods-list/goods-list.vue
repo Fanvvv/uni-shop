@@ -40,6 +40,8 @@
     },
     // 触底的事件
     onReachBottom() {
+      // 判断是否加载完毕
+      if (this.queryObj.pagenum * this.queryObj.pagesize >= this.total) return uni.$showMsg('数据加载完毕！')
       // 正在发送请求，则不再重复发送请求
       if (this.isLoading) return
       // 页面自增

@@ -36,13 +36,21 @@
       // 获取商品列表数据
       this.getGoodsList()
     },
+    // 触底的事件
+    onReachBottom() {
+      // 页面自增
+      this.queryObj.pagenum += 1
+      // 重新获取数据
+      this.getGoodsList()
+    },
     methods: {
       // 获取商品列表数据的方法
       async getGoodsList() {
         const { data } = await uni.$http.get('/api/public/v1/goods/search', this.queryObj)
         console.log(data)
         if (data.meta.status !== 200) return uni.$showMsg()
-        this.goodsList = data.message.goods
+        // 新旧数据拼接
+        this.goodsList = [...this.goodsList, ...data.message.goods]
         this.total = data.message.total
       }
     }

@@ -1,6 +1,11 @@
 <template>
   <view>
-    goods-detail
+    <!-- 轮播图 -->
+    <swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
+      <swiper-item v-for="item in goodsInfo.pics" :key="item.goods_id">
+        <image :src="item.pics_big"></image>
+      </swiper-item>
+    </swiper>
   </view>
 </template>
 
@@ -29,5 +34,11 @@
 </script>
 
 <style lang="scss">
-
+swiper {
+  height: 750rpx;
+  image {
+    width: 100%;
+    height: 100%;
+  }
+}
 </style>

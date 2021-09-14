@@ -38,7 +38,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapState, mapMutations } from 'vuex'
   export default {
     data() {
       return {
@@ -74,7 +74,7 @@
     },
     computed: {
       ...mapState('cart', ['cart'])
-    }
+    },
     methods: {
       async getGoodsDetail(goodsId) {
         const { data } = await uni.$http.get('/api/public/v1/goods/detail', { goods_id: goodsId})
@@ -98,6 +98,24 @@
           uni.switchTab({
             url: '/pages/cart/cart'
           })
+        }
+      },
+      // 加入购物车方法
+      ...mapMutations('cart', ['addToCart']),
+      // 右侧按钮的点击事件处理函数
+      buttonClick(e) {
+        // console.log(e)
+        // 点击加入购物车
+        if (e.content.text === '加入购物车') {
+          const goods = {
+            goods_id: this.goodsInfo.goods_id,       // 商品的Id
+            goods_name: this.goodsInfo.goods_name,   // 商品的名称
+            goods_price: this.goodsInfo.goods_price, // 商品的价格
+            goods_count: 1,                           // 商品的数量
+            goods_small_logo: this.goodsInfo.goods_small_logo, // 商品的图片
+            goods_state: true                         // 商品的勾选状态
+          }
+          this.addToCart(goods)
         }
       }
     }

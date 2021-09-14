@@ -9,7 +9,17 @@ export default {
     cart: [],
   }),
   // 模块的 mutations 方法
-  mutations: {},
+  mutations: {
+    // 加入到购物车
+    addToCart(state, goods) {
+      const result = state.cart.find(x => x.goods_id === goods.goods_id)
+      if (!result) {
+        state.cart.push(goods)
+      } else {
+        result.count++
+      }
+    }
+  },
   // 模块的 getters 属性
   getters: {},
 }

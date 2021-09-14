@@ -38,6 +38,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   export default {
     data() {
       return {
@@ -71,6 +72,9 @@
       const goodsId = options.goods_id
       this.getGoodsDetail(goodsId)
     },
+    computed: {
+      ...mapState('cart', ['cart'])
+    }
     methods: {
       async getGoodsDetail(goodsId) {
         const { data } = await uni.$http.get('/api/public/v1/goods/detail', { goods_id: goodsId})

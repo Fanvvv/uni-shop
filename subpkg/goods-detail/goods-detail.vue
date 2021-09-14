@@ -2,8 +2,8 @@
   <view>
     <!-- 轮播图 -->
     <swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
-      <swiper-item v-for="item in goodsInfo.pics" :key="item.goods_id">
-        <image :src="item.pics_big"></image>
+      <swiper-item v-for="(item, index) in goodsInfo.pics" :key="item.goods_id">
+        <image :src="item.pics_big" @click="preview(index)"></image>
       </swiper-item>
     </swiper>
   </view>
@@ -28,6 +28,13 @@
         console.log(data)
         if (data.meta.status !== 200) return uni.$showMsg()
         this.goodsInfo = data.message
+      },
+      // 实现图片预览
+      preview(index) {
+        uni.previewImage({
+          current: index,
+          urls: this.goodsInfo.pics.map(item => item.pics_big)
+        })
       }
     }
   }

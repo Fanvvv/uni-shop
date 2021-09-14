@@ -1,5 +1,5 @@
 <template>
-  <view v-if="goodsInfo.goods_name">
+  <view v-if="goodsInfo.goods_name" class="goods-detail">
     <!-- 轮播图 -->
     <swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
       <swiper-item v-for="(item, index) in goodsInfo.pics" :key="item.goods_id">
@@ -25,6 +25,15 @@
     </view>
     <!-- 商品详情信息 -->
     <rich-text :nodes="goodsInfo.goods_introduce"></rich-text>
+    <!-- 商品导航组件 -->
+    <view class="goods-nav">
+      <!-- fill 控制右侧按钮的样式 -->
+      <!-- options 左侧按钮的配置项 -->
+      <!-- buttonGroup 右侧按钮的配置项 -->
+      <!-- click 左侧按钮的点击事件处理函数 -->
+      <!-- buttonClick 右侧按钮的点击事件处理函数 -->
+      <uni-goods-nav :fill="true" :options="options" :buttonGroup="buttonGroup" @click="onClick" @buttonClick="buttonClick" />
+    </view>
   </view>
 </template>
 
@@ -33,7 +42,28 @@
     data() {
       return {
         // 商品详情
-        goodsInfo: {}
+        goodsInfo: {},
+        // 左侧按钮组的配置对象
+        options: [{
+          icon: 'shop',
+          text: '店铺'
+        }, {
+          icon: 'cart',
+          text: '购物车',
+          info: 2
+        }],
+        // 右侧按钮组的配置对象
+        buttonGroup: [{
+            text: '加入购物车',
+            backgroundColor: '#ff0000',
+            color: '#fff'
+          },
+          {
+            text: '立即购买',
+            backgroundColor: '#ffa200',
+            color: '#fff'
+          }
+        ]
       };
     },
     onLoad(options) {
@@ -103,5 +133,16 @@ swiper {
     font-size: 12px;
     color: gray;
   }
+}
+.goods-nav {
+  // 为商品导航组件添加固定定位
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.goods-detail{
+  // 添加内边距，商品详细信息才能完全展示
+  padding-bottom: 50px;
 }
 </style>

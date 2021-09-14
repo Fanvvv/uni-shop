@@ -16,10 +16,16 @@ export default {
       if (!result) {
         state.cart.push(goods)
       } else {
-        result.count++
+        result.goods_count++
       }
     }
   },
   // 模块的 getters 属性
-  getters: {},
+  getters: {
+    total(state) {
+      let count = 0
+      state.cart.forEach(goods => count += goods.goods_count)
+      return count
+    }
+  },
 }

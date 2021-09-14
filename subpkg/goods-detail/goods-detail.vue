@@ -38,7 +38,7 @@
 </template>
 
 <script>
-  import { mapState, mapMutations } from 'vuex'
+  import { mapState, mapMutations, mapGetters } from 'vuex'
   export default {
     data() {
       return {
@@ -51,7 +51,7 @@
         }, {
           icon: 'cart',
           text: '购物车',
-          info: 2
+          info: 0
         }],
         // 右侧按钮组的配置对象
         buttonGroup: [{
@@ -73,12 +73,22 @@
       this.getGoodsDetail(goodsId)
     },
     computed: {
-      ...mapState('cart', ['cart'])
+      ...mapState('cart', ['cart']),
+      ...mapGetters('cart', ['total'])
+    },
+    watch: {
+      total(newVal) {
+        const result = this.options.find(item => item.text === '购物车')
+        if (result) {
+          result.info = newVal
+        }
+        console.log(result)
+      }
     },
     methods: {
       async getGoodsDetail(goodsId) {
         const { data } = await uni.$http.get('/api/public/v1/goods/detail', { goods_id: goodsId})
-        console.log(data)
+        // console.log(data)
         if (data.meta.status !== 200) return uni.$showMsg()
         // 解决每张图片之间有空白的问题 解决 .webp 格式的图片在 ios 不显示的问题
         data.message.goods_introduce = data.message.goods_introduce.replace(/<img /g, '<img style="display: block;"').replace(/webp/g, 'jpg')

@@ -86,6 +86,15 @@
           current: index,
           urls: this.goodsInfo.pics.map(item => item.pics_big)
         })
+      },
+      // 左侧按钮的点击事件处理函数
+      onClick(e) {
+        if (e.content.text === '购物车') {
+          // 切换到购物车页面
+          uni.switchTab({
+            url: '/pages/cart/cart'
+          })
+        }
       }
     }
   }

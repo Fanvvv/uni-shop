@@ -77,12 +77,15 @@
       ...mapGetters('cart', ['total'])
     },
     watch: {
-      total(newVal) {
-        const result = this.options.find(item => item.text === '购物车')
-        if (result) {
-          result.info = newVal
-        }
-        console.log(result)
+      total: {
+        handler(newVal) {
+          const result = this.options.find(item => item.text === '购物车')
+          if (result) {
+            result.info = newVal
+          }
+          // console.log(result)
+        },
+        immediate: true
       }
     },
     methods: {

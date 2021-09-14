@@ -23,6 +23,8 @@
       <!-- 运费 -->
       <view class="yf">快递：免运费</view>
     </view>
+    <!-- 商品详情信息 -->
+    <rich-text :nodes="goodsInfo.goods_introduce"></rich-text>
   </view>
 </template>
 
@@ -44,6 +46,8 @@
         const { data } = await uni.$http.get('/api/public/v1/goods/detail', { goods_id: goodsId})
         console.log(data)
         if (data.meta.status !== 200) return uni.$showMsg()
+        // 解决每张图片之间有空白的问题 解决 .webp 格式的图片在 ios 不显示的问题
+        data.message.goods_introduce = data.message.goods_introduce.replace(/<img /g, '<img style="display: block;"').replace(/webp/g, 'jpg')
         this.goodsInfo = data.message
       },
       // 实现图片预览

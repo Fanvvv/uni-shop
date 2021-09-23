@@ -8,9 +8,15 @@
 		  <text class="cart-title-text">购物车</text>
 		</view>
     <!-- 商品列表 -->
-    <view v-for="(goods, index) in cart" :key="index">
-      <my-goods :goods="goods" :show-radio="true" :show-num="true" @radio-change="handleRadioChange" @num-change="handleNumChange"></my-goods>
-    </view>
+    <!-- uni-swipe-action 是最外层包裹性质的容器 -->
+    <uni-swipe-action>
+      <block v-for="(goods, index) in cart" :key="index">
+        <!-- uni-swipe-action-item 可以为其子节点提供滑动操作的效果。需要通过 options 属性来指定操作按钮的配置信息 -->
+        <uni-swipe-action-item :right-options="options" @click="handleSwipeActionClick(goods)">
+          <my-goods :goods="goods" :show-radio="true" :show-num="true" @radio-change="handleRadioChange" @num-change="handleNumChange"></my-goods>
+        </uni-swipe-action-item>
+      </block>
+    </uni-swipe-action>
 	</view>
 </template>
 
@@ -19,7 +25,14 @@
   import { mapState, mapMutations } from 'vuex'
 	export default {
 		data() {
-			return {};
+			return {
+        options: [{
+          text: '删除', // 显示的文本内容
+          style: {
+            backgroundColor: '#C00000' // 按钮的背景颜色
+          }
+        }]
+      };
 		},
     mixins: [TabbarBadge],
     computed: {
@@ -34,6 +47,9 @@
       },
       handleNumChange(e) {
         this.updateGoodsCount(e)
+      },
+      handleSwipeActionClick(e) {
+        console.log(e)
       }
     }
 	}

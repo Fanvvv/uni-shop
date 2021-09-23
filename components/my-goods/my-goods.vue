@@ -2,7 +2,7 @@
   <view>
     <view class="goods-item">
       <view class="goods-item-left">
-        <radio :checked="goods.goods_state" color="#C00000" v-if="showRadio"></radio>
+        <radio :checked="goods.goods_state" color="#C00000" v-if="showRadio" @click="handleRadioClick"></radio>
         <image :src="goods.goods_small_logo || defaultPic" mode="widthFix" class="goods-pic"></image>
       </view>
       <view class="goods-item-right">
@@ -38,6 +38,15 @@
         type: Boolean,
         // 如果外界没有指定 show-radio 属性的值，则默认不展示 radio 组件
         default: false,
+      }
+    },
+    methods: {
+      handleRadioClick() {
+        this.$emit('radioChange', {
+          goods_id: this.goods.goods_id,
+          // 商品最新的勾选状态
+          goods_state: !this.goods.goods_state
+        })
       }
     },
     filters: {

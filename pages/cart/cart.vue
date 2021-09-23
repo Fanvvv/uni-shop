@@ -9,14 +9,14 @@
 		</view>
     <!-- 商品列表 -->
     <view v-for="(goods, index) in cart" :key="index">
-      <my-goods :goods="goods" :show-radio="true"></my-goods>
+      <my-goods :goods="goods" :show-radio="true" @radio-change="handleRadioChange"></my-goods>
     </view>
 	</view>
 </template>
 
 <script>
   import TabbarBadge from '@/mixins/tabbar-badge.js'
-  import { mapState } from 'vuex'
+  import { mapState, mapMutations } from 'vuex'
 	export default {
 		data() {
 			return {};
@@ -24,6 +24,13 @@
     mixins: [TabbarBadge],
     computed: {
       ...mapState('cart', ['cart'])
+    },
+    methods: {
+      ...mapMutations('cart', ['updateGoodsState']),
+      handleRadioChange(e) {
+        // console.log(e)
+        this.updateGoodsState(e)
+      }
     }
 	}
 </script>

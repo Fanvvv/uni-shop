@@ -24,6 +24,16 @@ export default {
     // 保存到本地存储
     saveToStorage(state) {
       uni.setStorageSync('cart', JSON.stringify(state.cart))
+    },
+    // 更新购物车中商品的勾选状态
+    updateGoodsState(state, goods) {
+      const result = state.cart.find(item => item.goods_id === goods.goods_id)
+      if (result) {
+        // 更新对应商品的勾选状态
+        result.goods_state = goods.goods_state
+        // 持久化存储到本地
+        this.commit('cart/saveToStorage')
+      }
     }
   },
   // 模块的 getters 属性

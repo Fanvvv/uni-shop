@@ -9,7 +9,7 @@
 		</view>
     <!-- 商品列表 -->
     <view v-for="(goods, index) in cart" :key="index">
-      <my-goods :goods="goods" :show-radio="true" @radio-change="handleRadioChange"></my-goods>
+      <my-goods :goods="goods" :show-radio="true" :show-num="true" @radio-change="handleRadioChange"></my-goods>
     </view>
 	</view>
 </template>

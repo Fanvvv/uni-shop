@@ -13,6 +13,8 @@
           <view class="goods-price">
             &yen;{{ goods.goods_price | toFixed }}
           </view>
+          <!-- 商品数量 -->
+          <uni-number-box :min="1" :value="goods.goods_count" v-if="showNum"></uni-number-box>
         </view>
       </view>
     </view>
@@ -38,6 +40,11 @@
         type: Boolean,
         // 如果外界没有指定 show-radio 属性的值，则默认不展示 radio 组件
         default: false,
+      },
+      // 是否展示数量组件
+      showNum: {
+        type: Boolean,
+        default: false
       }
     },
     methods: {
@@ -76,10 +83,16 @@
   }
   &-right {
     display: flex;
+    flex: 1;
     flex-direction: column;
     justify-content: space-between;
     .goods-name {
       font-size: 13px;
+    }
+    .goods-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
     .goods-price {
       font-size: 16px;

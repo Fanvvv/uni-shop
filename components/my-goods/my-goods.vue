@@ -14,7 +14,7 @@
             &yen;{{ goods.goods_price | toFixed }}
           </view>
           <!-- 商品数量 -->
-          <uni-number-box :min="1" :value="goods.goods_count" v-if="showNum"></uni-number-box>
+          <uni-number-box :min="1" :value="goods.goods_count" v-if="showNum" @change="handleNumChange"></uni-number-box>
         </view>
       </view>
     </view>
@@ -53,6 +53,12 @@
           goods_id: this.goods.goods_id,
           // 商品最新的勾选状态
           goods_state: !this.goods.goods_state
+        })
+      },
+      handleNumChange(value) {
+        this.$emit('numChange', {
+          goods_id: this.goods.goods_id,
+          goods_count: +value
         })
       }
     },

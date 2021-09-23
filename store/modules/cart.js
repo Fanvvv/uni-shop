@@ -34,6 +34,14 @@ export default {
         // 持久化存储到本地
         this.commit('cart/saveToStorage')
       }
+    },
+    // 更新购物车中商品的数量
+    updateGoodsCount(state, goods) {
+      const result = state.cart.find(item => item.goods_count === goods.goods_count)
+      if (result) {
+        result.goods_count = goods.goods_count
+        this.commit('cart/saveToStorage')
+      }
     }
   },
   // 模块的 getters 属性

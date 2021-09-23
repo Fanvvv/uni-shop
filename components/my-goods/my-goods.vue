@@ -2,6 +2,7 @@
   <view>
     <view class="goods-item">
       <view class="goods-item-left">
+        <radio :checked="goods.goods_state" color="#C00000" v-if="showRadio"></radio>
         <image :src="goods.goods_small_logo || defaultPic" mode="widthFix" class="goods-pic"></image>
       </view>
       <view class="goods-item-right">
@@ -31,6 +32,12 @@
       goods: {
         type: Object,
         default: () => ({})
+      },
+      // 是否展示图片左侧的 radio
+      showRadio: {
+        type: Boolean,
+        // 如果外界没有指定 show-radio 属性的值，则默认不展示 radio 组件
+        default: false,
       }
     },
     filters: {
@@ -49,6 +56,9 @@
   border-bottom: 1px solid #f0f0f0;
   &-left {
     margin-right: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     .goods-pic {
       width: 100px;
       height: 100px;

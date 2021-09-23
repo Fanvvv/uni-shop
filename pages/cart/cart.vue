@@ -39,8 +39,7 @@
       ...mapState('cart', ['cart'])
     },
     methods: {
-      ...mapMutations('cart', ['updateGoodsState']),
-      ...mapMutations('cart', ['updateGoodsCount']),
+      ...mapMutations('cart', ['updateGoodsState', 'updateGoodsCount', 'removeGoodsById']),
       handleRadioChange(e) {
         // console.log(e)
         this.updateGoodsState(e)
@@ -49,7 +48,7 @@
         this.updateGoodsCount(e)
       },
       handleSwipeActionClick(e) {
-        console.log(e)
+        this.removeGoodsById(e.goods_id)
       }
     }
 	}

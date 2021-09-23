@@ -42,6 +42,11 @@ export default {
         result.goods_count = goods.goods_count
         this.commit('cart/saveToStorage')
       }
+    },
+    // 将商品从购物车中移除
+    removeGoodsById(state, id) {
+      state.cart = state.cart.filter(item => item.goods_id !== id)
+      this.commit('cart/saveToStorage')
     }
   },
   // 模块的 getters 属性

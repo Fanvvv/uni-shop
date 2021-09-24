@@ -37,7 +37,7 @@ export default {
     },
     // 更新购物车中商品的数量
     updateGoodsCount(state, goods) {
-      const result = state.cart.find(item => item.goods_count === goods.goods_count)
+      const result = state.cart.find(item => item.goods_id === goods.goods_id)
       if (result) {
         result.goods_count = goods.goods_count
         this.commit('cart/saveToStorage')

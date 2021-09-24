@@ -60,9 +60,15 @@
 			value(val) {
 				this.inputValue = +val;
 			},
-			modelValue(val){
+			modelValue(val) {
 				this.inputValue = +val;
-			}
+			},
+      inputValue(newVal, oldVal) {
+        // console.log(oldVal, +newVal)
+        if (+newVal !== +oldVal && Number(newVal) && String(newVal).indexOf('.') === -1) {
+          this.$emit("change", +newVal);
+        }
+      }
 		},
 		created() {
 			if(this.value === 1){

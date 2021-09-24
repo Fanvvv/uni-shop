@@ -2,7 +2,7 @@
   <view class="my-settle-container">
     <!-- 全选区域 -->
     <label class="radio">
-      <radio color="#C00000" :checked="true" /><text>全选</text>
+      <radio color="#C00000" :checked="isFullCheck" /><text>全选</text>
     </label>
     <!-- 合计区域 -->
     <view class="amount-box">
@@ -23,7 +23,11 @@
       };
     },
     computed: {
-      ...mapGetters('cart', ['checkedCount'])
+      ...mapGetters('cart', ['checkedCount', 'total']),
+      // 是否全选
+      isFullCheck() {
+        return this.total === this.checkedCount
+      }
     }
   }
 </script>

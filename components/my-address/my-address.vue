@@ -5,7 +5,7 @@
       <button type="primary" size="mini" class="btnChooseAddress" @click="chooseAddress">请选择收货地址+</button>
     </view>
     <!-- 渲染收货信息的盒子 -->
-    <view class="address-info-box" v-else>
+    <view class="address-info-box" v-else @click="chooseAddress">
       <view class="row1">
         <view class="row1-left">
           <view class="username">收货人：<text>{{ address.userName }}</text></view>

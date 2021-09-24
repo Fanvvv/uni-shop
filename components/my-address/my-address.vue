@@ -26,23 +26,30 @@
 </template>
 
 <script>
+  import { mapState, mapMutations } from 'vuex'
   export default {
     name:"my-address",
     data() {
       return {
-        address: {}
+        // address: {}
       };
     },
     methods: {
+      // 更新收货地址的方法
+      ...mapMutations('user', ['updateAddress']),
       async chooseAddress() {
         const [error, success] = await uni.chooseAddress().catch(err => err)
-        console.log(error, success)
+        // console.log(error, success)
         if (error === null && success.errMsg === 'chooseAddress:ok') {
-          this.address = success
+          // this.address = success
+          this.updateAddress(success)
         }
       }
     },
     computed: {
+      // vuex中的收货地址
+      ...mapState('user', ['address']),
+      // 拼接完整地址
       fullAddress() {
         if (!this.address.provinceName) return ''
         // 返回完整地址

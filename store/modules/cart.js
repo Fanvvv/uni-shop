@@ -47,6 +47,11 @@ export default {
     removeGoodsById(state, id) {
       state.cart = state.cart.filter(item => item.goods_id !== id)
       this.commit('cart/saveToStorage')
+    },
+    // 更新全部商品的状态
+    updateAllGoodsState(state, newState) {
+      state.cart.forEach(item => item.goods_state = newState)
+      this.commit('cart/saveToStorage')
     }
   },
   // 模块的 getters 属性

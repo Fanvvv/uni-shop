@@ -1,7 +1,7 @@
 <template>
   <view class="my-settle-container">
     <!-- 全选区域 -->
-    <label class="radio">
+    <label class="radio" @click="changeAllState">
       <radio color="#C00000" :checked="isFullCheck" /><text>全选</text>
     </label>
     <!-- 合计区域 -->
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapMutations } from 'vuex'
   export default {
     name:"my-settle",
     data() {
@@ -27,6 +27,13 @@
       // 是否全选
       isFullCheck() {
         return this.total === this.checkedCount
+      }
+    },
+    methods: {
+      ...mapMutations('cart', ['updateAllGoodsState']),
+      // 改变全部状态
+      changeAllState() {
+        this.updateAllGoodsState(!this.isFullCheck)
       }
     }
   }

@@ -16,5 +16,12 @@ export default {
       uni.setStorageSync('address', JSON.stringify(state.address))
     }
   },
-  getters: {}
+  getters: {
+    // 拼接完整地址
+    fullAddress(state) {
+      if (!state.address.provinceName) return ''
+      // 返回完整地址
+      return state.address.provinceName + state.address.cityName + state.address.countyName + state.address.detailInfo
+    }
+  }
 }

@@ -9,17 +9,21 @@
       合计:<text class="amount">￥1234.00</text>
     </view>
     <!-- 结算按钮 -->
-    <view class="btn-settle">结算(0)</view>
+    <view class="btn-settle">结算({{ checkedCount }})</view>
   </view>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   export default {
     name:"my-settle",
     data() {
       return {
         
       };
+    },
+    computed: {
+      ...mapGetters('cart', ['checkedCount'])
     }
   }
 </script>

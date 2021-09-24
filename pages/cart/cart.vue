@@ -18,6 +18,8 @@
         </uni-swipe-action-item>
       </block>
     </uni-swipe-action>
+    <!-- 结算区域 -->
+    <my-settle></my-settle>
 	</view>
 </template>
 
@@ -66,5 +68,8 @@
   .cart-title-text {
     margin-left: 10px;
   }
+}
+.cart-container {
+  padding-bottom: 50px;
 }
 </style>

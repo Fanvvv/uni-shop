@@ -67,6 +67,10 @@ export default {
       // 再使用 reduce 方法，将已勾选的商品总数量进行累加
       // reduce() 的返回值就是已勾选的商品的总数量
       return state.cart.filter(item => item.goods_state).reduce((total, item) => total += item.goods_count, 0)
+    },
+    // 勾选的商品的总价
+    checkedGoodsAmount(state) {
+      return state.cart.filter(item => item.goods_state).reduce((amount, item) => amount += item.goods_count * item.goods_price, 0).toFixed(2)
     }
   },
 }

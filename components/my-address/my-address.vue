@@ -2,22 +2,22 @@
   <view>
     <!-- 选择收货地址的盒子 -->
     <view class="address-choose-box" v-if="JSON.stringify(address) === '{}'">
-      <button type="primary" size="mini" class="btnChooseAddress">请选择收货地址+</button>
+      <button type="primary" size="mini" class="btnChooseAddress" @click="chooseAddress">请选择收货地址+</button>
     </view>
     <!-- 渲染收货信息的盒子 -->
     <view class="address-info-box" v-else>
       <view class="row1">
         <view class="row1-left">
-          <view class="username">收货人：<text>egret</text></view>
+          <view class="username">收货人：<text>{{ address.userName }}</text></view>
         </view>
         <view class="row1-right">
-          <view class="phone">电话：<text>185XXXX5555</text></view>
+          <view class="phone">电话：<text>{{ address.telNumber }}</text></view>
           <uni-icons type="arrowright" size="16"></uni-icons>
         </view>
       </view>
       <view class="row2">
         <view class="row2-left">收货地址：</view>
-        <view class="row2-right">湖南省长沙市</view>
+        <view class="row2-right">{{ fullAddress }}</view>
       </view>
     </view>
     <!-- 底部的边框线 -->
@@ -32,6 +32,22 @@
       return {
         address: {}
       };
+    },
+    methods: {
+      async chooseAddress() {
+        const [error, success] = await uni.chooseAddress().catch(err => err)
+        console.log(error, success)
+        if (error === null && success.errMsg === 'chooseAddress:ok') {
+          this.address = success
+        }
+      }
+    },
+    computed: {
+      fullAddress() {
+        if (!this.address.provinceName) return ''
+        // 返回完整地址
+        return this.address.provinceName + this.address.cityName + this.address.countyName + this.address.detailInfo
+      }
     }
   }
 </script>

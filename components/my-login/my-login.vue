@@ -3,19 +3,56 @@
     <!-- 提示登录的图标 -->
     <uni-icons type="contact-filled" size="100" color="#AFAFAF"></uni-icons>
     <!-- 登录按钮 -->
-    <button type="primary" class="btn-login">一键登录</button>
+    <button type="primary" class="btn-login" @tap="goLogin">一键登录</button>
     <!-- 登录提示 -->
     <view class="tips-text">登录后尽享更多权益</view>
   </view>
 </template>
 
 <script>
+  import { mapMutations } from 'vuex'
   export default {
     name:"my-login",
     data() {
       return {
         
       };
+    },
+    methods: {
+      ...mapMutations('user', ['updateUserInfo']),
+      async getToken(info) {
+        const [err, res] = await uni.login().catch(err => err)
+        // console.log(err, res)
+        if (err || res.errMsg !== 'login:ok') return uni.$showError('登录失败！')
+        // 准备参数对象
+        const query = {
+          code: res.code,
+          encryptedData: info.encryptedData,
+          iv: info.iv,
+          rawData: info.rawData,
+          signature: info.signature
+        }
+        // 换取 token
+        const { data } = await uni.$http.post('/api/public/v1/users/wxlogin', query)
+        if (data.meta.status !== 200) return uni.$showMsg('登录失败！')
+        uni.$showMsg('登录成功')
+      },
+      goLogin() {
+        uni.getUserProfile({
+            desc: '用于完善会员资料',  // 必填 声明获取用户个人信息后的用途，后续会展示在弹窗中
+            lang: 'zh_CN',
+            // 授权成功后的回调
+            success: (user) => {
+              this.getToken()
+              this.updateUserInfo(user.userInfo)
+            },
+            // 授权失败后的回调
+            fail(err) {
+              // console.log(err)
+              if (err.errMsg === "getUserProfile:fail auth deny") return uni.$showMsg('您取消了授权！')
+            }
+        })
+      }
     }
   }
 </script>

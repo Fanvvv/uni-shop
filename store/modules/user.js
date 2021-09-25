@@ -2,7 +2,8 @@ export default {
   namespaced: true,
   state: () => ({
     // 获取本地储存的地址
-    address: JSON.parse(uni.getStorageSync('address') || '{}')
+    address: JSON.parse(uni.getStorageSync('address') || '{}'),
+    token: ''
   }),
   mutations: {
     // 更新收货地址

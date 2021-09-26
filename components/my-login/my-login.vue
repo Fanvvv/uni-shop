@@ -19,23 +19,30 @@
       };
     },
     methods: {
-      ...mapMutations('user', ['updateUserInfo']),
+      ...mapMutations('user', ['updateUserInfo', 'updateToken']),
       async getToken(info) {
+        console.log(info)
         const [err, res] = await uni.login().catch(err => err)
         // console.log(err, res)
         if (err || res.errMsg !== 'login:ok') return uni.$showError('登录失败！')
         // 准备参数对象
-        const query = {
-          code: res.code,
-          encryptedData: info.encryptedData,
-          iv: info.iv,
-          rawData: info.rawData,
-          signature: info.signature
-        }
-        // 换取 token
-        const { data } = await uni.$http.post('/api/public/v1/users/wxlogin', query)
-        if (data.meta.status !== 200) return uni.$showMsg('登录失败！')
+        // const query = {
+        //   code: res.code,
+        //   encryptedData: info.encryptedData,
+        //   iv: info.iv,
+        //   rawData: info.rawData,
+        //   signature: info.signature
+        // }
+        // console.log(query)
+        // // 换取 token
+        // const { data } = await uni.$http.post('/api/public/v1/users/wxlogin', query)
+        // console.log(data)
+        // if (data.meta.status !== 200) return uni.$showMsg('登录失败！')
         uni.$showMsg('登录成功')
+        // 登录成功后设置 token
+        // 接口错误，自己定义一个 token
+        const token = "BearereyJhbGci0iJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQi0jEyLCJpYXQi0jE1MjUNDIyNjMsImV4cCI6WTUyNTQ40DYyW30.g-4GtEQNPwT_XsBPq7Lrco_9DfHQQsBiOKZerkO-O-o"
+        this.updateToken(token)
       },
       goLogin() {
         uni.getUserProfile({
@@ -43,7 +50,7 @@
             lang: 'zh_CN',
             // 授权成功后的回调
             success: (user) => {
-              this.getToken()
+              this.getToken(user)
               this.updateUserInfo(user.userInfo)
             },
             // 授权失败后的回调

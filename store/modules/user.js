@@ -3,7 +3,7 @@ export default {
   state: () => ({
     // 获取本地储存的地址
     address: JSON.parse(uni.getStorageSync('address') || '{}'),
-    token: '',
+    token: uni.getStorageSync('token') || '',
     userInfo: JSON.parse(uni.getStorageSync('userinfo') || '{}')
   }),
   mutations: {
@@ -25,6 +25,15 @@ export default {
     // 将 userInfo 持久化存储到本地
     saveUserInfoToStorage(state) {
       uni.setStorageSync('userinfo', JSON.stringify(state.userInfo))
+    },
+    // 更新 token
+    updateToken(state, token) {
+      state.token = token
+      this.commit('user/saveTokenToStoreage')
+    },
+    // 将 token 持久化存储到本地
+    saveTokenToStoreage(state) {
+      uni.setStorageSync('token', state.token)
     }
   },
   getters: {

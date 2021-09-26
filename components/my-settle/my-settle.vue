@@ -34,6 +34,7 @@
     },
     methods: {
       ...mapMutations('cart', ['updateAllGoodsState']),
+      ...mapMutations('user', ['updateRedirectInfo']),
       // 改变全部状态
       changeAllState() {
         this.updateAllGoodsState(!this.isFullCheck)
@@ -75,7 +76,16 @@
             clearInterval(this.timer)
             // 跳转到 my 页面
             uni.switchTab({
-              url: '/pages/my/my'
+              url: '/pages/my/my',
+              // 跳转成功后的回调
+              success: () => {
+                this.updateRedirectInfo({
+                  // 跳转的方式
+                  openType: 'switchTab',
+                  // 跳转到哪个页面
+                  from: '/pages/cart/cart'
+                })
+              }
             })
             // 终止后续代码的运行（当秒数为 0 时，不再展示 toast 提示消息）
             return

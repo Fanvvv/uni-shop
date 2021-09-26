@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import { mapMutations } from 'vuex'
+  import { mapMutations, mapState } from 'vuex'
   export default {
     name:"my-login",
     data() {
@@ -18,8 +18,11 @@
         
       };
     },
+    computed: {
+      ...mapState('user', ['redirectInfo'])
+    },
     methods: {
-      ...mapMutations('user', ['updateUserInfo', 'updateToken']),
+      ...mapMutations('user', ['updateUserInfo', 'updateToken', 'updateRedirectInfo']),
       async getToken(info) {
         console.log(info)
         const [err, res] = await uni.login().catch(err => err)
@@ -43,6 +46,8 @@
         // 接口错误，自己定义一个 token
         const token = "BearereyJhbGci0iJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQi0jEyLCJpYXQi0jE1MjUNDIyNjMsImV4cCI6WTUyNTQ40DYyW30.g-4GtEQNPwT_XsBPq7Lrco_9DfHQQsBiOKZerkO-O-o"
         this.updateToken(token)
+        // 跳回之前的页面
+        this.navigateBack()
       },
       goLogin() {
         uni.getUserProfile({
@@ -59,6 +64,21 @@
               if (err.errMsg === "getUserProfile:fail auth deny") return uni.$showMsg('您取消了授权！')
             }
         })
+      },
+      // 登录成功后，返回之前的页面
+      navigateBack() {
+        console.log(this.redirectInfo)
+        if (this.redirectInfo && this.redirectInfo.openType === 'switchTab') {
+          // 调用小程序提供的 uni.switchTab() API 进行页面的导航
+          uni.switchTab({
+            // 要导航到的页面地址
+            url: this.redirectInfo.from,
+            // 导航成功之后，把 vuex 中的 redirectInfo 对象重置为 null
+            complete: () => {
+              this.updateRedirectInfo(null)
+            }
+          })
+        }
       }
     }
   }
